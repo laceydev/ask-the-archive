@@ -1,0 +1,8 @@
+CHUNK_SIZE = 800
+CHUNK_OVERLAP = 150
+TOP_K = 4
+DISTANCE_THRESHOLD = 1.2
+GROQ_MODEL = "llama3-8b-8192"
+CHROMA_COLLECTION = "askthearchive"
+CHROMA_PATH = "./chroma_store"
+DOCS_FOLDER = "./docs"
