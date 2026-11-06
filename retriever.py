@@ -52,6 +52,7 @@ def build_chain():
     llm = ChatGroq(
         model=GROQ_MODEL,
         temperature=0,
+        max_tokens=2048,
         api_key=os.getenv("GROQ_API_KEY")
     )
     prompt = PromptTemplate.from_template(SYSTEM_PROMPT)
@@ -87,8 +88,4 @@ def ask(chain_dict, question: str, history: list) -> dict:
         "history": history_text,
         "context": format_docs(docs)
     })
-
-    if not answer or answer.strip() == "":
-        answer = "I couldn't find this in the loaded documents."
-
     return {"answer": answer, "sources": sources}
