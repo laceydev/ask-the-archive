@@ -7,6 +7,7 @@ from langchain_groq import ChatGroq
 from langchain_core.prompts import PromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.runnables import RunnablePassthrough
+from pathlib import Path
 from config import (
     GROQ_MODEL, CHROMA_COLLECTION,
     CHROMA_PATH, TOP_K
@@ -33,7 +34,7 @@ Question:
 
 def format_docs(docs):
     return "\n\n".join(
-        f"[Source: {doc.metadata.get('source', 'Unknown')}, Page {doc.metadata.get('page', '?')}]\n{doc.page_content}"
+        f"[Source: {Path(doc.metadata.get('source', 'Unknown')).name}, Page {int(doc.metadata.get('page', 0)) + 1}]\n{doc.page_content}"
         for doc in docs
     )
 
@@ -74,7 +75,10 @@ def ask(chain_dict, question: str, history: list) -> dict:
     sources = []
     for doc in docs:
         meta = doc.metadata
-        entry = f"{meta.get('source', 'Unknown')}, Page {meta.get('page', '?')}"
+        source_name = Path(meta.get('source', 'Unknown')).name
+        page = meta.get('page', 0)
+        page = int(page) + 1 if str(page).isdigit() else page
+        entry = f"{source_name}, Page {page}"
         if entry not in sources:
             sources.append(entry)
 
