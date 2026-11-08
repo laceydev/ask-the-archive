@@ -6,22 +6,33 @@ from config import DOCS_FOLDER
 
 st.set_page_config(page_title="AskTheArchive", page_icon="🗂️")
 
+
+def load_css(file_name: str):
+    css_path = Path(__file__).parent / file_name
+    with open(css_path, encoding="utf-8") as f:
+        st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+
+
+load_css("style.css")
+
+# ---------- Sidebar ----------
 with st.sidebar:
-    st.title("🗂️ AskTheArchive")
-    st.markdown("---")
+    st.title("🗂️ Ask The Archive")
+    st.divider()
     st.markdown("**Loaded documents:**")
     docs = list(Path(DOCS_FOLDER).glob("*.pdf")) + list(Path(DOCS_FOLDER).glob("*.md"))
     if docs:
         for doc in docs:
-            st.markdown(f" {doc.name}")
+            st.markdown(f"{doc.name}")
+            st.divider()
     else:
         st.warning("No documents found in /docs")
-    st.markdown("---")
     if st.button("🗑️ Clear conversation"):
         st.session_state.messages = []
         st.session_state.history = []
         st.rerun()
 
+# ---------- Session state ----------
 if "messages" not in st.session_state:
     st.session_state.messages = []
 if "history" not in st.session_state:
@@ -30,8 +41,14 @@ if "chain_dict" not in st.session_state:
     with st.spinner("Loading documents and model..."):
         st.session_state.chain_dict = build_chain()
 
-st.title("Ask your documents anything.")
+# ---------- Header ----------
+st.markdown("# ASK THE ARCHIVE")
+st.markdown(
+    "<p class='subtitle'>Ask your documents anything!</p>",
+    unsafe_allow_html=True,
+)
 
+# ---------- Chat history ----------
 for msg in st.session_state.messages:
     with st.chat_message(msg["role"]):
         st.markdown(msg["content"])
@@ -40,6 +57,7 @@ for msg in st.session_state.messages:
                 for s in msg["sources"]:
                     st.markdown(f"- {s}")
 
+# ---------- Chat input ----------
 if question := st.chat_input("Ask a question about your documents..."):
     st.session_state.messages.append({"role": "user", "content": question})
     with st.chat_message("user"):
@@ -50,7 +68,7 @@ if question := st.chat_input("Ask a question about your documents..."):
             result = ask(
                 st.session_state.chain_dict,
                 question,
-                st.session_state.history
+                st.session_state.history,
             )
         st.markdown(result["answer"])
         if result["sources"]:
@@ -61,9 +79,9 @@ if question := st.chat_input("Ask a question about your documents..."):
     st.session_state.messages.append({
         "role": "assistant",
         "content": result["answer"],
-        "sources": result["sources"]
+        "sources": result["sources"],
     })
     st.session_state.history.append({
         "user": question,
-        "assistant": result["answer"]
+        "assistant": result["answer"],
     })
