@@ -9,6 +9,10 @@ The PDPA guidelines. The healthcare sector guidelines. The employment law guide.
 AskTheArchive is for them!
 
 Ask a question in plain English. Get an answer pulled straight from the documents, with the document name and page number attached. If the answer isn't in there, it says so instead of making something up.
+
+**Live demo:**[ask-the-archive.streamlit.app] (https://ask-the-archive.streamlit.app/)
+
+![screenshot](ask-the-archive-ui.png)
 ---
 
 ## What's in here
