@@ -3,6 +3,7 @@ import streamlit as st
 from pathlib import Path
 from retriever import build_chain, ask
 from config import DOCS_FOLDER, CHROMA_PATH
+import threading
 
 st.set_page_config(page_title="AskTheArchive", page_icon="🗂️")
 
@@ -31,62 +32,47 @@ with st.sidebar:
         st.session_state.messages = []
         st.session_state.history = []
         st.rerun()
-        
-if not Path(CHROMA_PATH).exists():
-    from ingest import ingest_all
-    import time
+
+# ---------- Model loading with jokes ----------
+if "chain_dict" not in st.session_state:
+    done = threading.Event()
     
     jokes = [
         ("Indexing your documents... this might take a minute...or several", "sooooo, you come here often?"),
-        ("Yep! Still chunking... choo choooo!! (that's the sound of a truck, do you think it should be chuu chuu instead?)", "Why did the Python dev go broke?... He used all his cache!!"),
-        ("Embedding vectors... (yes I know it's really long I'm sorry)", "What did the .NET developer name their boat? The S.S. Sharp!"),
         ("Embedding vectors...", "Why do programmers prefer dark mode? Because light attracts bugs!!"),
-        ("still going!! A bittt more", "Why was the JavaScript developer sad? Because he didn't Node how to Express himself :("),
-        ("still going!! A bittt more", "This is taking a while, huh!"),
-        ("still going!! A bittt more", "My dog used to chase people on a bicycle...It got so bad that I had to take his bike away!?"),
-        ("Almost there...", "Someone stole my Microsoft Office and they're gonna PAY!! You have my Word."),
-        ("Almost there...", "Which Hogwarts house is able to communicate securely? SSLytheryn"),
-        ("Almost there...", "Why aren't frontend developers humble? They display: flex;!!"),("Almost there...", "Yikes that last one was really bad wasn't it"),
-        ("Almost there...", "A GET request was reluctant to go the party... They had no body to go with!"),
         ("Finishing up...", "I don't trust Matlab developers, They're always plotting something!"),
-        ("Finishing up...", "I walked down a street where the houses were numbered 64K, 128K, 256K, 512K and 1MB.It was a nice trip down memory lane"),
-        ("Finishing up...", "I once knew an excellent programmer that believed they wrote bad spaghetti code.They had Impasta Syndrome.")
+        ("still going!! A bittt more", "Why was the JavaScript developer sad? Because he didn't Node how to Express himself :("),
+        ("Almost there...", "Which Hogwarts house is able to communicate securely? SSLytheryn"),
+        ("Almost there...", "Why aren't frontend developers humble? They display: flex;!!"),
+        ("Almost there...", "A GET request was reluctant to go the party... They had no body to go with!"),
+        ("Finishing up...", "I walked down a street where the houses were numbered 64K, 128K, 256K, 512K and 1MB. It was a nice trip down memory lane"),
+        ("Finishing up...", "I once knew an excellent programmer that believed they wrote bad spaghetti code. They had Impasta Syndrome.")
     ]
     
     status = st.empty()
     joke_display = st.empty()
     
-    import threading
-    done = threading.Event()
-    
-    def run_ingest():
-        ingest_all()
+    def load():
+        st.session_state.chain_dict = build_chain()
         done.set()
     
-    thread = threading.Thread(target=run_ingest)
-    thread.start()
+    threading.Thread(target=load).start()
     
     i = 0
     while not done.is_set():
-        spinner_text, joke = jokes[i % len(jokes)]
-        status.info(spinner_text)
-        joke_display.markdown(f"*{joke}*")
+        status.info(jokes[i % len(jokes)][0])
+        joke_display.markdown(f"*{jokes[i % len(jokes)][1]}*")
         i += 1
-        done.wait(timeout=30)
+        done.wait(timeout=3)
     
-    thread.join()
     status.empty()
     joke_display.empty()
-    st.rerun()
 
 # ---------- Session state ----------
 if "messages" not in st.session_state:
     st.session_state.messages = []
 if "history" not in st.session_state:
     st.session_state.history = []
-if "chain_dict" not in st.session_state:
-    with st.spinner("Loading documents and model..."):
-        st.session_state.chain_dict = build_chain()
 
 # ---------- Header ----------
 st.markdown("# ASK THE ARCHIVE")
