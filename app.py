@@ -38,9 +38,8 @@ if "chain_dict" not in st.session_state:
     done = threading.Event()
     
     jokes = [
-        ("Indexing your documents... this might take a minute...or several", "sooooo, you come here often?"),
+        ("Indexing your documents... this might take a minute...or several", "I don't trust Matlab developers, They're always plotting something!"),
         ("Embedding vectors...", "Why do programmers prefer dark mode? Because light attracts bugs!!"),
-        ("Finishing up...", "I don't trust Matlab developers, They're always plotting something!"),
         ("still going!! A bittt more", "Why was the JavaScript developer sad? Because he didn't Node how to Express himself :("),
         ("Almost there...", "Which Hogwarts house is able to communicate securely? SSLytheryn"),
         ("Almost there...", "Why aren't frontend developers humble? They display: flex;!!"),
