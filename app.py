@@ -2,7 +2,7 @@
 import streamlit as st
 from pathlib import Path
 from retriever import build_chain, ask
-from config import DOCS_FOLDER
+from config import DOCS_FOLDER, CHROMA_PATH
 
 st.set_page_config(page_title="AskTheArchive", page_icon="🗂️")
 
@@ -21,6 +21,11 @@ with st.sidebar:
         st.session_state.messages = []
         st.session_state.history = []
         st.rerun()
+        
+if not Path(CHROMA_PATH).exists():
+    from ingest import ingest_all
+    with st.spinner("First run: indexing documents (a minute or two)..."):
+        ingest_all()
 
 if "messages" not in st.session_state:
     st.session_state.messages = []
