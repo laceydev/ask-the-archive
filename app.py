@@ -35,8 +35,9 @@ with st.sidebar:
 
 # ---------- Model loading with jokes ----------
 if "chain_dict" not in st.session_state:
+    holder = {}
     done = threading.Event()
-    
+
     jokes = [
         ("Indexing your documents... this might take a minute...or several", "I don't trust Matlab developers, They're always plotting something!"),
         ("Embedding vectors...", "Why do programmers prefer dark mode? Because light attracts bugs!!"),
@@ -45,27 +46,38 @@ if "chain_dict" not in st.session_state:
         ("Almost there...", "Why aren't frontend developers humble? They display: flex;!!"),
         ("Almost there...", "A GET request was reluctant to go the party... They had no body to go with!"),
         ("Finishing up...", "I walked down a street where the houses were numbered 64K, 128K, 256K, 512K and 1MB. It was a nice trip down memory lane"),
-        ("Finishing up...", "I once knew an excellent programmer that believed they wrote bad spaghetti code. They had Impasta Syndrome.")
+        ("Finishing up...", "I once knew an excellent programmer that believed they wrote bad spaghetti code. They had Impasta Syndrome."),
     ]
-    
+
+    def load():
+        try:
+            if not Path(CHROMA_PATH).exists():
+                from ingest import ingest_all
+                ingest_all()
+            holder["chain_dict"] = build_chain()
+        except Exception as e:
+            holder["error"] = e
+        finally:
+            done.set()
+
+    threading.Thread(target=load, daemon=True).start()
+
     status = st.empty()
     joke_display = st.empty()
-    
-    def load():
-        st.session_state.chain_dict = build_chain()
-        done.set()
-    
-    threading.Thread(target=load).start()
-    
     i = 0
     while not done.is_set():
         status.info(jokes[i % len(jokes)][0])
         joke_display.markdown(f"*{jokes[i % len(jokes)][1]}*")
         i += 1
-        done.wait(timeout=3)
-    
+        done.wait(timeout=5)
+
     status.empty()
     joke_display.empty()
+
+    if "error" in holder:
+        st.error("Something went wrong loading the documents. Try refreshing.")
+        st.stop()
+    st.session_state.chain_dict = holder["chain_dict"]
 
 # ---------- Session state ----------
 if "messages" not in st.session_state:
