@@ -7,3 +7,4 @@ langchain-core
 langchain-community
 langchain-groq
 sentence-transformers
+pysqlite3-binary
