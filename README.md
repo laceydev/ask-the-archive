@@ -123,12 +123,17 @@ Because I'd rather you hear it from me:
 
 | Tool | Purpose |
 |------|---------|
-| LangChain | Prompt and chain plumbing |
-| Groq | LLM inference |
-| ChromaDB | Local vector store |
+| LangChain | Chain orchestration and retrieval |
+| langchain-community | Document loaders and ChromaDB integration |
+| langchain-groq | Groq LLM integration |
+| Groq (llama3-8b-8192) | LLM inference, free and fast |
+| ChromaDB 0.4.24 | Local vector store |
 | sentence-transformers | Local embeddings (all-MiniLM-L6-v2) |
+| HuggingFace (all-MiniLM-L6-v2) | Embedding model, runs locally |
 | pypdf | PDF text extraction |
-| Streamlit | Chat UI |
+| python-dotenv | Environment variable management |
+| numpy 1.23.5 | Pinned for ChromaDB compatibility |
+| Streamlit | Chat UI and deployment |
 ---
 ## What this demonstrates
 
@@ -136,3 +141,22 @@ Because I'd rather you hear it from me:
 - Prompt design that favours "I don't know" over a confident guess
 - Honest documentation of limitations
 - Shipping something complete and usable, with a live link
+
+## References & Document Sources
+
+The regulatory and advisory documents indexed in this project are publicly available guidelines published by Singapore Government agencies. They are formatted below according to APA 7th edition standards:
+
+1. Cyber Security Agency of Singapore. (2021). *Cybersecurity code of practice for critical information infrastructure* (2nd ed., Rev. 1). Government of Singapore. https://www.csa.gov.sg
+2. Ministry of Health & Personal Data Protection Commission. (2019). *Advisory guidelines for the healthcare sector*. Government of Singapore. https://www.pdpc.gov.sg
+3. Ministry of Manpower. (2014). *Tripartite advisory on flexible work arrangements*. Government of Singapore. https://www.mom.gov.sg
+4. Ministry of Manpower. (2020). *Workright guide to employment laws*. Government of Singapore. https://www.mom.gov.sg
+5. Ministry of Manpower. (2023). *COMPASS: Navigating with a quick guide on Singapore's Employment Pass criteria*. Government of Singapore. https://www.mom.gov.sg
+6. Personal Data Protection Commission. (2018). *Guide to data sharing* (Rev. ed.). Government of Singapore. https://www.pdpc.gov.sg
+7. Personal Data Protection Commission. (2021). *Advisory guidelines on key concepts in the Personal Data Protection Act*. Government of Singapore. https://www.pdpc.gov.sg
+8. Personal Data Protection Commission. (2021). *Advisory guidelines on the Personal Data Protection Act for selected topics*. Government of Singapore. https://www.pdpc.gov.sg
+9. Personal Data Protection Commission. (2021). *Guide to developing a data protection management programme*. Government of Singapore. https://www.pdpc.gov.sg
+10. Personal Data Protection Commission. (2022). *Guide to basic anonymisation*. Government of Singapore. https://www.pdpc.gov.sg
+11. Personal Data Protection Commission. (2022). *Guide to data protection practices for ICT systems*. Government of Singapore. https://www.pdpc.gov.sg
+12. Personal Data Protection Commission. (2023). *Guide on building websites for SMEs*. Government of Singapore. https://www.pdpc.gov.sg
+13. Personal Data Protection Commission. (2024). *Proposed advisory guidelines on key concepts in the Personal Data Protection Act*. Government of Singapore. https://www.pdpc.gov.sg
+14. Personal Data Protection Commission. (2024). *Guidelines on appropriate contribution/use of personal data*. Government of Singapore. https://www.pdpc.gov.sg
