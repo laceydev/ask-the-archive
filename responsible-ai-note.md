@@ -14,17 +14,16 @@ pre-loaded set of publicly available Singapore government and regulatory documen
 - Guaranteed to be accurate or complete
 
 ## How hallucination is mitigated
-The system prompt explicitly instructs the model to answer ONLY from retrieved document 
-chunks. If retrieved chunks don't contain relevant information, the system returns a 
-hardcoded string:
+The system prompt explicitly instructs the model to answer ONLY from retrieved document
+chunks and never speculate. If the chunks don't contain the answer, the model is told to
+reply with an exact phrase:
 
-"I couldn't find this in the loaded documents."
+> "I couldn't find this in the loaded documents."
 
-This fallback is a hardcoded string, not AI-generated, so the model cannot fabricate 
-a polite-sounding excuse or just make something up.
-
-However, the LLM can still misinterpret or misrepresent retrieved chunks. 
-Human verification against source documents is always recommended, especially with important documents
+This is enforced by prompting, not by code, so it is not a guarantee. The model usually
+obeys, but it can occasionally misread a chunk, append a citation to the "not found"
+message, or answer confidently from a chunk that only looks relevant.
+Human verification against the cited page is always recommended.
 
 ## Data and privacy
 - No personal data is collected or stored
@@ -56,4 +55,6 @@ All documents loaded into this system are publicly available from:
   the answer will be wrong or absent
 - No guarantee of completeness— the document may contain relevant information 
   in a chunk that wasn't retrieved
-- Model knowledge cutoff may affect interpretation of recent regulatory changes 
+- Model knowledge cutoff may affect interpretation of recent regulatory changes
+- Several loaded documents cover overlapping guideline versions, so answers may blend
+  them. Check which document an answer cites.

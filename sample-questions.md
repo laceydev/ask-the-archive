@@ -25,9 +25,11 @@ Use these to test and demo the system. Organised by document and type.
 - What are the key cybersecurity obligations for organisations in Singapore?
 - What does the Cybersecurity Act require of critical information infrastructure owners?
 
-## Questions that should return "I couldn't find this"
+## Questions that should return the not-found message
 These test the anti-hallucination fallback:
 - What is the weather forecast for Singapore tomorrow?
 - Who won the 2024 Singapore general election?
 - What is the best restaurant in Orchard Road?
 - How do I apply for a HDB flat?
+
+*These test the prompt-enforced fallback. Results may vary*
