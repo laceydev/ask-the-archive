@@ -1,0 +1,125 @@
+
+/* ---------- Theme variables (tweak these first) ---------- */
+:root {
+    --bg-base: #05060d;
+    --glass-bg: rgba(255, 255, 255, 0.045);
+    --glass-border: rgba(255, 255, 255, 0.10);
+    --glass-blur: blur(18px) saturate(140%);
+    --text-main: rgba(255, 255, 255, 0.88);
+    --text-muted: rgba(255, 255, 255, 0.45);
+    --accent: 139, 92, 246;
+}
+
+/* ---------- Background ---------- */
+.stApp {
+    background:
+        radial-gradient(ellipse at 15% 10%, rgba(139, 92, 246, 0.22) 0%, transparent 50%),
+        radial-gradient(ellipse at 85% 60%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
+        radial-gradient(ellipse at 40% 100%, rgba(236, 72, 153, 0.10) 0%, transparent 45%),
+        var(--bg-base);
+    background-attachment: fixed;
+}
+
+[data-testid="stHeader"],
+[data-testid="stBottom"],
+[data-testid="stBottom"] > div,
+[data-testid="stMain"] {
+    background: transparent !important;
+}
+
+/* ---------- Text ---------- */
+.stApp, .stMarkdown, p, li {
+    color: var(--text-main) !important;
+}
+
+h1 {
+    color: #ffffff !important;
+    font-weight: 300 !important;
+    letter-spacing: 2px !important;
+    text-transform: uppercase !important;
+    font-size: 1.8rem !important;
+}
+
+.subtitle {
+    color: var(--text-muted);
+    letter-spacing: 3px;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    margin-top: -20px;
+}
+
+
+[data-testid="stSidebar"] {
+    background: rgba(255, 255, 255, 0.02) !important;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-right: 1px solid var(--glass-border);
+}
+
+[data-testid="stSidebar"] h1 {
+    font-size: 1.2rem !important;
+    letter-spacing: 3px !important;
+}
+
+[data-testid="stSidebar"] hr {
+    border: none !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.07) !important;
+    margin: 0.6rem 0 !important;
+}
+
+/* ---------- Chat bubbles ---------- */
+[data-testid="stChatMessage"] {
+    background: var(--glass-bg) !important;
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px !important;
+    padding: 16px !important;
+    margin-bottom: 12px !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+/* ---------- Chat input ---------- */
+[data-testid="stChatInput"] {
+    background: rgba(255, 255, 255, 0.04) !important;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border) !important;
+    border-radius: 24px !important;
+}
+
+[data-testid="stChatInput"]:focus-within {
+    border-color: rgba(var(--accent), 0.5) !important;
+    box-shadow: 0 0 20px rgba(var(--accent), 0.15) !important;
+}
+
+/* ---------- Sources expander ---------- */
+[data-testid="stExpander"] {
+    background: rgba(255, 255, 255, 0.025) !important;
+    border: 1px solid rgba(255, 255, 255, 0.06) !important;
+    border-radius: 12px !important;
+}
+
+/* ---------- Buttons ---------- */
+.stButton button {
+    background: rgba(255, 255, 255, 0.04) !important;
+    border: 1px solid var(--glass-border) !important;
+    border-radius: 12px !important;
+    color: rgba(255, 255, 255, 0.7) !important;
+    transition: all 0.2s ease !important;
+}
+
+.stButton button:hover {
+    background: rgba(255, 255, 255, 0.09) !important;
+    border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+/* ---------- Spinner + scrollbar ---------- */
+.stSpinner { color: var(--text-muted) !important; }
+
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+}
