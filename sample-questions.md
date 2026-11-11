@@ -10,7 +10,6 @@ Use these to test and demo the system. Organised by document and type.
 - Follow-up: How does that apply to public agencies?
 
 ## Healthcare Sector
-- What are the PDPA obligations for healthcare organisations?
 - How should healthcare organisations handle patient data?
 - What are the consent requirements for healthcare data collection?
 - Follow-up: What are the exceptions to that?
@@ -23,16 +22,14 @@ Use these to test and demo the system. Organised by document and type.
 ## Data Sharing and Anonymisation
 - What should organisations consider before sharing personal data?
 - What is anonymisation and when is it appropriate under PDPA?
-- What are the risks of improper anonymisation?
 
 ## SMEs and Websites
 - What are the data protection obligations for SME websites?
-- What should a privacy policy on a website include?
+- What should a privacy policy be on a website include?
 
 ## Employment
 - What are the tripartite guidelines on flexible work arrangements?
 - Can an employer reject a flexible work request?
-- Follow-up: What are the grounds for rejection?
 
 ## ICT and Data Protection
 - What are the data protection practices recommended for ICT systems?
