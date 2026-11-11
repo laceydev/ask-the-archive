@@ -6,3 +6,4 @@ GROQ_MODEL = "openai/gpt-oss-20b"
 CHROMA_COLLECTION = "askthearchive"
 CHROMA_PATH = "./chroma_store"
 DOCS_FOLDER = "./docs"
+MAX_TOKENS = 2048
