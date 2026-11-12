@@ -5,7 +5,6 @@ from retriever import build_chain, ask
 from config import DOCS_FOLDER, CHROMA_PATH
 import threading
 import random
-import time
 
 st.set_page_config(page_title="AskTheArchive", page_icon="🗂️")
 
