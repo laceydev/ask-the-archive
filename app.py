@@ -4,6 +4,8 @@ from pathlib import Path
 from retriever import build_chain, ask
 from config import DOCS_FOLDER, CHROMA_PATH
 import threading
+import random
+import time
 
 st.set_page_config(page_title="AskTheArchive", page_icon="🗂️")
 
@@ -48,6 +50,7 @@ if "chain_dict" not in st.session_state:
         ("Finishing up...", "I walked down a street where the houses were numbered 64K, 128K, 256K, 512K and 1MB. It was a nice trip down memory lane"),
         ("Finishing up...", "I once knew an excellent programmer that believed they wrote bad spaghetti code. They had Impasta Syndrome."),
     ]
+    random.shuffle(jokes)
 
     def load():
         try:
@@ -60,6 +63,7 @@ if "chain_dict" not in st.session_state:
         finally:
             done.set()
 
+    start_time = time.time()
     threading.Thread(target=load, daemon=True).start()
 
     status = st.empty()
@@ -74,7 +78,9 @@ if "chain_dict" not in st.session_state:
     status.empty()
     joke_display.empty()
 
-    if "error" in holder:
+    elapsed = time.time() - start_time
+    if elapsed < 6:
+        time.sleep(6 - elapsed)
         st.error("Something went wrong loading the documents. Try refreshing.")
         st.stop()
     st.session_state.chain_dict = holder["chain_dict"]
