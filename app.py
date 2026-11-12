@@ -63,7 +63,6 @@ if "chain_dict" not in st.session_state:
         finally:
             done.set()
 
-    start_time = time.time()
     threading.Thread(target=load, daemon=True).start()
 
     status = st.empty()
@@ -73,14 +72,12 @@ if "chain_dict" not in st.session_state:
         status.info(jokes[i % len(jokes)][0])
         joke_display.markdown(f"*{jokes[i % len(jokes)][1]}*")
         i += 1
-        done.wait(timeout=5)
+        done.wait(timeout=2)
 
     status.empty()
     joke_display.empty()
 
-    elapsed = time.time() - start_time
-    if elapsed < 6:
-        time.sleep(6 - elapsed)
+    if "error" in holder:
         st.error("Something went wrong loading the documents. Try refreshing.")
         st.stop()
     st.session_state.chain_dict = holder["chain_dict"]
